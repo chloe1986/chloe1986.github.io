@@ -1,13 +1,65 @@
 <html>
 <head>
-<title>Love Study</title>	
-</head>	
-<body >
-	<center>
-		</br></br></br>
-		<h1>Love Study test page</h1>
-		</br></br></br>
-		Hello ,World!
-	</center>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
+    <style type="text/css">
+        body, html, #allmap {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            margin: 0;
+            font-family: "微软雅黑";
+        }
+
+        .anchorBL {
+            display: none;
+        }
+    </style>
+    <script type="text/javascript"
+            src="http://api.map.baidu.com/api?v=2.0&ak=dpB1d25b7smGMe8evaIAxw881Aq3AUfb"></script>
+    <title></title>
+</head>
+<body>
+<div id="allmap"></div>
+<script type="text/javascript">
+
+    // 百度地图API功能
+    var map = new BMap.Map("allmap");
+    map.centerAndZoom("河海大学江宁校区", 16);
+    var walking = new BMap.WalkingRoute(map, {
+        renderOptions: {
+            map: map,
+            autoViewport: true
+        }
+    });
+
+    map.enableScrollWheelZoom();   //启用滚轮放大缩小，默认禁用
+    map.enableContinuousZoom();    //启用地图惯性拖拽，默认禁用
+    //路况
+    var traffic = new BMap.TrafficLayer();        // 创建交通流量图层实例
+    map.addTileLayer(traffic);                    // 将图层添加到地图上
+
+    var myIcon = new BMap.Icon("../images/marker_MAN.png", new BMap.Size(20, 26));
+    var _points = [];
+    map.addEventListener("click", function (e) {
+        var _point = {
+            lng: "",
+            lat: ""
+        };
+        _point.lng = e.point.lng;
+        _point.lat = e.point.lat;
+        _points.push(_point);
+        map.addOverlay(new BMap.Marker(new BMap.Point(e.point.lng, e.point.lat), {icon: myIcon}));
+        console.log(_points);
+        // alert(e.point.lng + "," + e.point.lat);
+        if (_points.length === 2) {
+            var start = new BMap.Point(_points[0].lng, _points[0].lat);
+            var end = new BMap.Point(_points[1].lng, _points[1].lat);
+            walking.search(start, end);
+            map.clearOverlays();
+            _points = [];
+        }
+    });
+</script>
 </body>
 </html>
