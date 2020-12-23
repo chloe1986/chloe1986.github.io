@@ -36,12 +36,13 @@
     map.enableScrollWheelZoom();   //启用滚轮放大缩小，默认禁用
     map.enableContinuousZoom();    //启用地图惯性拖拽，默认禁用
     //路况
-    var traffic = new BMap.TrafficLayer();        // 创建交通流量图层实例
-    map.addTileLayer(traffic);                    // 将图层添加到地图上
+   // var traffic = new BMap.TrafficLayer();        // 创建交通流量图层实例
+    //map.addTileLayer(traffic);                    // 将图层添加到地图上
 
     var myIcon = new BMap.Icon("../images/marker_MAN.png", new BMap.Size(20, 26));
     var _points = [];
-    map.addEventListener("click", function (e) {
+    
+   /* map.addEventListener("click", function (e) {
         var _point = {
             lng: "",
             lat: ""
@@ -60,6 +61,8 @@
             _points = [];
         }
     });
+   */ 
+    
 </script>
 </body>
 </html>
